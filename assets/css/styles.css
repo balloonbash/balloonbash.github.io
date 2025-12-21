@@ -54,7 +54,7 @@ a { color: inherit; text-decoration: none; }
 
 /* Auto-scaling logo */
 .site-logo {
-  max-height: 20px;   /* 👈 key line */
+  max-height: 32px;   /* 👈 key line */
   height: clamp(26px, 4vw, 32px); /* mobile → desktop */
   width: auto;                   /* keep aspect ratio */
   max-width: 100%;
