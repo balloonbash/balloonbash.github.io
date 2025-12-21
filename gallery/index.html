@@ -1,1 +1,160 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Gallery</title>
+
+  <!-- If you already have global styles -->
+  <link rel="stylesheet" href="../assets/css/styles.css" />
+
+  <style>
+    /* Minimal gallery styles (safe to keep here or move to styles.css) */
+    .container { max-width: 1100px; margin: 40px auto; padding: 0 16px; }
+    h1 { margin-bottom: 16px; }
+    .subtitle { opacity: 0.8; margin-bottom: 24px; }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 14px;
+    }
+
+    .card {
+      border-radius: 14px;
+      overflow: hidden;
+      background: #111;
+      border: 1px solid rgba(255,255,255,0.08);
+    }
+
+    .card img {
+      width: 100%;
+      height: 220px;
+      object-fit: cover;
+      display: block;
+      transition: transform 0.25s ease;
+      cursor: zoom-in;
+    }
+
+    .card:hover img { transform: scale(1.03); }
+
+    .caption {
+      padding: 10px 12px;
+      font-size: 14px;
+      opacity: 0.9;
+      background: rgba(255,255,255,0.03);
+    }
+
+    /* Lightbox */
+    .lightbox {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.85);
+      display: none;
+      place-items: center;
+      padding: 20px;
+      z-index: 9999;
+    }
+    .lightbox.open { display: grid; }
+    .lightbox img {
+      max-width: min(1100px, 95vw);
+      max-height: 85vh;
+      border-radius: 14px;
+    }
+    .close {
+      position: fixed;
+      top: 16px;
+      right: 18px;
+      font-size: 28px;
+      color: white;
+      background: transparent;
+      border: 0;
+      cursor: pointer;
+      opacity: 0.85;
+    }
+    .close:hover { opacity: 1; }
+  </style>
+</head>
+
+<body>
+  <main class="container">
+    <h1>Gallery</h1>
+    <div class="subtitle">A selection of my work.</div>
+
+    <section class="grid">
+      <!-- Replace src with your real filenames -->
+      <figure class="card">
+        <img src="../assets/img/0b46584e-155b-44e6-9e48-ae706d005bea.jpg" alt="Work 1" loading="lazy">
+        <figcaption class="caption">Balloon Arch — Classic</figcaption>
+      </figure>
+      
+      <figure class="card">
+        <img src="../assets/img/1c5b47fe-dd46-4719-b845-af53fc43014f.jpg" alt="Work 1" loading="lazy">
+        <figcaption class="caption">Balloon Arch — Classic</figcaption>
+      </figure>
+      
+      <figure class="card">
+        <img src="../assets/img/db43efa9-983f-44c2-aaee-efca8dc22963.jpg" alt="Work 1" loading="lazy">
+        <figcaption class="caption">Balloon Arch — Classic</figcaption>
+      </figure>
+
+      <figure class="card">
+        <img src="../assets/img/photo_6215525307993754835_y.jpg" alt="Work 2" loading="lazy">
+        <figcaption class="caption">Birthday Setup</figcaption>
+      </figure>
+
+      <figure class="card">
+        <img src="../assets/img/photo_6215525307993754836_y.jpg" alt="Work 3" loading="lazy">
+        <figcaption class="caption">Event Backdrop</figcaption>
+      </figure>
+
+      <figure class="card">
+        <img src="../assets/img/photo_6215525307993754838_y.jpg" alt="Work 4" loading="lazy">
+        <figcaption class="caption">Custom Theme</figcaption>
+      </figure>
+
+      <figure class="card">
+        <img src="../assets/img/photo_6215525307993754840_y.jpg" alt="Work 4" loading="lazy">
+        <figcaption class="caption">Custom Theme</figcaption>
+      </figure>
+    </section>
+  </main>
+
+  <!-- Lightbox -->
+  <div class="lightbox" id="lightbox" aria-hidden="true">
+    <button class="close" id="closeBtn" aria-label="Close">&times;</button>
+    <img id="lightboxImg" alt="">
+  </div>
+
+  <script>
+    const lightbox = document.getElementById("lightbox");
+    const lightboxImg = document.getElementById("lightboxImg");
+    const closeBtn = document.getElementById("closeBtn");
+
+    document.querySelectorAll(".card img").forEach(img => {
+      img.addEventListener("click", () => {
+        lightboxImg.src = img.src;
+        lightboxImg.alt = img.alt || "Gallery image";
+        lightbox.classList.add("open");
+        lightbox.setAttribute("aria-hidden", "false");
+      });
+    });
+
+    function closeLightbox() {
+      lightbox.classList.remove("open");
+      lightbox.setAttribute("aria-hidden", "true");
+      lightboxImg.src = "";
+    }
+
+    closeBtn.addEventListener("click", closeLightbox);
+    lightbox.addEventListener("click", (e) => {
+      if (e.target === lightbox) closeLightbox();
+    });
+
+    window.addEventListener("keydown", (e) => {
+      if (e.key === "Escape") closeLightbox();
+    });
+  </script>
+</body>
+</html>
 
