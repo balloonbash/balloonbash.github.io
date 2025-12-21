@@ -44,10 +44,21 @@ a { color: inherit; text-decoration: none; }
   background: #e6e6e6;
 }
 
-.logo { /* index.html logo size */
-  width: 120px;      /* adjust this number */
-  height: auto;      /* keeps aspect ratio */
+/* Header wrapper */
+.site-header { /* index.html size*/
+  padding: 12px clamp(16px, 4vw, 32px);
+  display: flex;
+  align-items: center;
 }
+
+/* Auto-scaling logo */
+.site-logo {
+  height: clamp(26px, 4vw, 32px); /* mobile → desktop */
+  width: auto;                   /* keep aspect ratio */
+  max-width: 100%;
+  display: block;
+}
+
 
 
 @media (max-width: 900px) {
