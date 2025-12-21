@@ -31,17 +31,17 @@ a { color: inherit; text-decoration: none; }
 .footer-links { display: flex; gap: 14px; flex-wrap: wrap; }
 
 .back-btn {
-  display: inline-block;
-  margin-bottom: 20px;
-  font-size: 14px;
+  color: #111;                  /* dark text */
+  background: #f2f2f2;          /* light grey background */
+  border: 1px solid #ddd;
+  padding: 8px 14px;
+  border-radius: 999px;
   text-decoration: none;
-  color: #fff;
-  opacity: 0.8;
+  font-size: 14px;
 }
 
 .back-btn:hover {
-  opacity: 1;
-  text-decoration: underline;
+  background: #e6e6e6;
 }
 
 
