@@ -10,8 +10,30 @@ a { color: inherit; text-decoration: none; }
 .nav { display: flex; gap: 14px; align-items: center; }
 .nav a { padding: 8px 10px; border-radius: 10px; }
 .nav a:hover { background: #f4f4f5; }
+/* Image logo sizing — THIS is the magic */
+.nav-logo{
+  height: clamp(36px, 5vw, 44px); /* 👈 navbar-perfect size */
+  width: auto;
+  display:block;
+}
+/* Nav links */
+.nav-links{
+  display:flex;
+  align-items:center;
+  gap:28px;
+}
+.nav-links a{
+  text-decoration:none;
+  color:#111;
+  font-size:16px;
+}
 .btn { border: 1px solid #111; padding: 8px 12px; border-radius: 999px; }
 .btn:hover { background: #111; color: #fff; }
+.btn-quote{
+  padding: 10px 16px;
+  border: 1px solid #111;
+  border-radius: 999px;
+}
 
 .hero { padding: 42px 0; }
 .hero h1 { font-size: 40px; line-height: 1.05; margin: 0 0 10px; }
