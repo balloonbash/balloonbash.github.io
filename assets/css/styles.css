@@ -30,6 +30,21 @@ a { color: inherit; text-decoration: none; }
 .footer-inner { display: flex; justify-content: space-between; gap: 16px; flex-wrap: wrap; }
 .footer-links { display: flex; gap: 14px; flex-wrap: wrap; }
 
+.back-btn {
+  display: inline-block;
+  margin-bottom: 20px;
+  font-size: 14px;
+  text-decoration: none;
+  color: #fff;
+  opacity: 0.8;
+}
+
+.back-btn:hover {
+  opacity: 1;
+  text-decoration: underline;
+}
+
+
 @media (max-width: 900px) {
   .grid { grid-template-columns: 1fr; }
   .hero h1 { font-size: 32px; }
