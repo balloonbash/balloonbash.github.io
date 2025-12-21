@@ -5,5 +5,5 @@ async function inject(selector, url) {
   el.innerHTML = await res.text();
 }
 
-inject("#header", "/balloonbash/partials/header.html");
-inject("#footer", "/balloonbash/partials/footer.html");
+inject("#header", "/partials/header.html");
+inject("#footer", "/partials/footer.html");
