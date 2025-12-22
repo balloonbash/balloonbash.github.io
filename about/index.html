@@ -2,59 +2,342 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>About Us | Balloon Bash</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>About Us | Balloon Bash</title>
+  <meta name="description" content="Balloon Bash is a couple-run balloon styling brand in Singapore. We create meaningful celebrations with care, and we respect that balloons belong to our customers." />
+
+  <style>
+    :root{
+      --bg:#0b0f19;
+      --card:#111827;
+      --text:#e5e7eb;
+      --muted:#9ca3af;
+      --line:rgba(255,255,255,.08);
+      --accent:#fbbf24;
+      --btn:#ffffff;
+      --btnText:#0b0f19;
+      --radius:18px;
+      --shadow: 0 10px 25px rgba(0,0,0,.35);
+      --max: 980px;
+    }
+    *{ box-sizing:border-box; }
+    body{
+      margin:0;
+      font-family: system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji","Segoe UI Emoji";
+      background: radial-gradient(1200px 700px at 15% 0%, rgba(251,191,36,.18), transparent 50%),
+                  radial-gradient(900px 600px at 95% 10%, rgba(147,197,253,.10), transparent 55%),
+                  var(--bg);
+      color:var(--text);
+      line-height:1.55;
+    }
+
+    /* header placeholder */
+    #site-header{ border-bottom:1px solid var(--line); background: rgba(11,15,25,.65); backdrop-filter: blur(10px); position: sticky; top:0; z-index:50; }
+    /* If your header.html already has its own styling, it will still work. This is just safe defaults */
+    .wrap{ max-width: var(--max); margin:0 auto; padding: 0 18px; }
+
+    .hero{
+      padding: 34px 0 10px;
+    }
+    .hero__grid{
+      display:grid;
+      gap:16px;
+      grid-template-columns: 1.2fr .8fr;
+      align-items: stretch;
+    }
+    @media (max-width: 860px){
+      .hero__grid{ grid-template-columns: 1fr; }
+    }
+
+    .card{
+      background: rgba(17,24,39,.82);
+      border:1px solid var(--line);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      overflow:hidden;
+    }
+    .card__pad{ padding: 22px; }
+
+    .badge{
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      padding: 8px 12px;
+      border-radius: 999px;
+      border: 1px solid rgba(251,191,36,.35);
+      background: rgba(251,191,36,.10);
+      color: var(--text);
+      font-weight: 600;
+      font-size: 13px;
+      letter-spacing: .2px;
+    }
+    h1{
+      margin: 12px 0 6px;
+      font-size: 34px;
+      line-height: 1.15;
+      letter-spacing: -0.3px;
+    }
+    .sub{
+      margin:0;
+      color: var(--muted);
+      font-size: 15.5px;
+      max-width: 70ch;
+    }
+
+    .pillRow{
+      display:flex;
+      flex-wrap:wrap;
+      gap:10px;
+      margin-top: 16px;
+    }
+    .pill{
+      border: 1px solid var(--line);
+      background: rgba(255,255,255,.03);
+      padding: 9px 12px;
+      border-radius: 999px;
+      font-size: 13px;
+      color: var(--text);
+    }
+
+    .cta{
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+      margin-top: 16px;
+    }
+    .btn{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      gap:10px;
+      padding: 11px 14px;
+      border-radius: 12px;
+      border: 1px solid rgba(255,255,255,.15);
+      background: rgba(255,255,255,.08);
+      color: var(--text);
+      text-decoration:none;
+      font-weight: 650;
+      font-size: 14px;
+    }
+    .btn--primary{
+      background: var(--btn);
+      color: var(--btnText);
+      border-color: transparent;
+    }
+
+    .rightBox{
+      display:flex;
+      flex-direction: column;
+      gap: 12px;
+      height: 100%;
+    }
+    .quote{
+      border-left: 4px solid rgba(251,191,36,.75);
+      padding-left: 14px;
+      margin: 0;
+      color: var(--text);
+      font-weight: 600;
+    }
+    .quote small{
+      display:block;
+      color: var(--muted);
+      font-weight: 500;
+      margin-top: 6px;
+    }
+
+    .section{
+      padding: 18px 0 34px;
+    }
+    .grid{
+      display:grid;
+      gap: 16px;
+      grid-template-columns: 1fr 1fr;
+    }
+    @media (max-width: 860px){
+      .grid{ grid-template-columns: 1fr; }
+    }
+
+    h2{
+      margin: 0 0 10px;
+      font-size: 18px;
+      letter-spacing: -0.2px;
+    }
+    .muted{ color: var(--muted); margin: 0; }
+
+    .valueList{
+      margin: 10px 0 0;
+      padding: 0;
+      list-style: none;
+      display:grid;
+      gap:10px;
+    }
+    .valueItem{
+      display:flex;
+      gap:12px;
+      padding: 12px 12px;
+      border-radius: 14px;
+      border: 1px solid var(--line);
+      background: rgba(255,255,255,.03);
+    }
+    .dot{
+      width: 10px; height: 10px; border-radius: 99px;
+      background: rgba(251,191,36,.9);
+      margin-top: 7px;
+      flex: 0 0 auto;
+    }
+
+    .callout{
+      display:flex;
+      gap:12px;
+      align-items:flex-start;
+      padding: 14px 14px;
+      border-radius: 16px;
+      border: 1px solid rgba(251,191,36,.25);
+      background: rgba(251,191,36,.08);
+    }
+    .callout strong{ display:block; margin-bottom:4px; }
+    .footer{
+      border-top:1px solid var(--line);
+      padding: 22px 0;
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    /* Active nav styling (works if your header links use href like /about/) */
+    .nav__link--active{ position: relative; }
+    .nav__link--active::after{
+      content:"";
+      position:absolute;
+      left:0;
+      right:0;
+      bottom:-10px;
+      height:2px;
+      background: rgba(251,191,36,.9);
+      border-radius: 999px;
+    }
+  </style>
 </head>
+
 <body>
+  <!-- Header injected here -->
+  <div id="site-header"></div>
 
-  <!-- Header will be shared -->
-  <header>
-    <nav>
-      <a href="/">Home</a>
-      <a href="/about/">About Us</a>
-      <a href="/policies/">Policies</a>
-    </nav>
-  </header>
+  <div class="wrap">
+    <section class="hero">
+      <div class="hero__grid">
+        <div class="card">
+          <div class="card__pad">
+            <span class="badge">🎈 Couple-run • Singapore</span>
+            <h1>We’re Balloon Bash.</h1>
+            <p class="sub">
+              A small, home-grown balloon styling brand run by a couple — trying, learning, and building this journey with a lot of heart.
+              We create balloon décor for birthdays, proposals, celebrations, and events.
+            </p>
 
-  <main>
-    <h1>About Balloon Bash</h1>
+            <div class="pillRow">
+              <span class="pill">Custom designs</span>
+              <span class="pill">Careful setup</span>
+              <span class="pill">Respectful service</span>
+              <span class="pill">Small business energy</span>
+            </div>
 
-    <p>  
-    Balloon Bash is a small, home-grown balloon styling brand run by a couple in Singapore,
-    taking our first steps into the balloon business with a lot of heart and passion.
-    </p>
+            <div class="cta">
+              <a class="btn btn--primary" href="/#contact">Enquire / Get a Quote</a>
+              <a class="btn" href="/policies/">View Policies</a>
+            </div>
+          </div>
+        </div>
 
-    <p>
-    What started as a simple idea to create beautiful moments for loved ones has grown into
-    a journey of learning, experimenting, and bringing joy through balloons — one event at a time.
-  </p>
+        <div class="rightBox">
+          <div class="card">
+            <div class="card__pad">
+              <p class="quote">
+                “We want your celebration to feel personal — not cookie-cutter.”
+                <small>— Balloon Bash</small>
+              </p>
+            </div>
+          </div>
 
-     <p>
-    We believe that celebrations should feel personal, meaningful, and stress-free.
-    Every setup we create is done with care, as if it were for our own family or friends.
-  </p>
+          <div class="card">
+            <div class="card__pad">
+              <h2>What we’re about</h2>
+              <p class="muted">
+                Thoughtful balloon styling, clear communication, and a smooth experience from start to finish.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
 
-  <p>
-    One value we strongly stand by is <strong>respecting our customers’ purchases</strong>.
-    Once the setup is completed and paid for, the balloons belong to the customer.
-    We do not dismantle or remove balloon decor unless specifically requested.
-    This allows our customers to enjoy their celebration for as long as they wish.
-  </p>
+    <section class="section">
+      <div class="grid">
+        <div class="card">
+          <div class="card__pad">
+            <h2>Our story</h2>
+            <p class="muted">
+              Balloon Bash started as a simple idea: create beautiful moments for loved ones.
+              As a couple, we decided to try it seriously — learning fast, improving every week,
+              and putting pride into every setup we deliver.
+            </p>
+          </div>
+        </div>
 
-    <p>
-    As a couple-run business, we may be small, but we are sincere in what we do.
-    We are continuously improving, listening to feedback, and refining our craft
-    so we can create better experiences with every event.
-  </p>
+        <div class="card">
+          <div class="card__pad">
+            <h2>Our promise</h2>
+            <ul class="valueList">
+              <li class="valueItem"><span class="dot"></span><div><strong>We do it with care</strong>We treat your setup like it’s for our own family or friends.</div></li>
+              <li class="valueItem"><span class="dot"></span><div><strong>We communicate clearly</strong>No guessing — we keep things simple and transparent.</div></li>
+              <li class="valueItem"><span class="dot"></span><div><strong>We keep improving</strong>Small business, big effort — every event helps us get better.</div></li>
+            </ul>
+          </div>
+        </div>
+      </div>
 
-    <p>
-    Thank you for supporting a small local business and trusting us to be part of
-    your special moments.
-  </p>
-    
-    
-  </main>
+      <div style="height:16px"></div>
 
+      <div class="card">
+        <div class="card__pad">
+          <div class="callout">
+            <div>✅</div>
+            <div>
+              <strong>We don’t dismantle after setup (unless you request it).</strong>
+              Once the setup is completed and paid for, the balloons belong to you.
+              We believe customers should enjoy their décor for as long as they want —
+              not have it removed early.
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <footer class="footer">
+      <div class="wrap" style="padding:0;">
+        © <span id="year"></span> Balloon Bash • Made with care in Singapore
+      </div>
+    </footer>
+  </div>
+
+  <script>
+    // Inject header partial (GitHub Pages friendly)
+    fetch("/partial/header.html")
+      .then(r => r.text())
+      .then(html => {
+        document.getElementById("site-header").innerHTML = html;
+
+        // Optional: highlight active nav item based on current path
+        const path = location.pathname.replace(/\/+$/, "") || "/";
+        document.querySelectorAll('a[href]').forEach(a => {
+          const href = (a.getAttribute("href") || "").replace(/\/+$/, "") || "/";
+          if (href === path) a.classList.add("nav__link--active");
+        });
+      })
+      .catch(() => {
+        // If header fails to load, page still works.
+      });
+
+    document.getElementById("year").textContent = new Date().getFullYear();
+  </script>
 </body>
 </html>
-
