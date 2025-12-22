@@ -31,9 +31,9 @@
       line-height:1.55;
     }
 
-    /* header placeholder */
+    /* header placeholder 
     #site-header{ border-bottom:1px solid var(--line); background: rgba(11,15,25,.65); backdrop-filter: blur(10px); position: sticky; top:0; z-index:50; }
-    /* If your header.html already has its own styling, it will still work. This is just safe defaults */
+     If your header.html already has its own styling, it will still work. This is just safe defaults */
     .wrap{ max-width: var(--max); margin:0 auto; padding: 0 18px; }
 
     .hero{
@@ -215,6 +215,45 @@
       background: rgba(251,191,36,.9);
       border-radius: 999px;
     }
+  header {
+  position: sticky;
+  top: 0;
+  z-index: 999;
+  background: rgba(11,15,25,.55);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid rgba(255,255,255,.08);
+}
+
+header nav {
+  max-width: 980px;
+  margin: 0 auto;
+  padding: 14px 18px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+header nav a {
+  color: #e5e7eb;
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 14px;
+  opacity: .85;
+}
+
+header nav a:hover {
+  opacity: 1;
+}
+
+header nav a:last-child {
+  margin-left: auto;
+  background: #ffffff;
+  color: #0b0f19;
+  padding: 10px 14px;
+  border-radius: 12px;
+  font-weight: 700;
+}
+    
   </style>
 </head>
 
@@ -286,13 +325,32 @@
         <div class="card">
           <div class="card__pad">
             <h2>Our promise</h2>
-            <ul class="valueList">
-              <p class="muted">
-              <li class="valueItem"><span class="dot"></span><div><strong>We do it with care</strong>We treat your setup like it’s for our own family or friends.</div></li>
-              <span class="dot"></span><div><strong>We communicate clearly</strong>No guessing — we keep things simple and transparent.</div>
-              <span class="dot"></span><div><strong>We keep improving</strong>Small business, big effort — every event helps us get better.</div>
-            </p>
-            </ul>
+<ul class="valueList">
+  <li class="valueItem">
+    <span class="dot"></span>
+    <div>
+      <strong>We do it with care</strong>
+      We treat your setup like it’s for our own family or friends.
+    </div>
+  </li>
+
+  <li class="valueItem">
+    <span class="dot"></span>
+    <div>
+      <strong>We communicate clearly</strong>
+      No guessing — we keep things simple and transparent.
+    </div>
+  </li>
+
+  <li class="valueItem">
+    <span class="dot"></span>
+    <div>
+      <strong>We keep improving</strong>
+      Small business, big effort — every event helps us get better.
+    </div>
+  </li>
+</ul>
+
           </div>
         </div>
       </div>
