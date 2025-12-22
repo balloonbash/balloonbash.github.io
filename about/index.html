@@ -321,7 +321,7 @@
 
   <script>
     // Inject header partial (GitHub Pages friendly)
-    fetch("/partial/header.html")
+    fetch("/partials/header.html")
       .then(r => r.text())
       .then(html => {
         document.getElementById("site-header").innerHTML = html;
