@@ -41,7 +41,33 @@
         <small>— Proposal Setup</small>
       </div>
     </div>
+     <!-- Test REVIEW Automation -->
+    <div id="reviews-list"></div>
+<script>
+fetch("/reviews/data.json")
+  .then(r => r.json())
+  .then(reviews => {
+    const container = document.getElementById("reviews-list");
 
+    reviews.forEach(r => {
+      const card = document.createElement("div");
+      card.className = "card";
+      card.style.marginBottom = "12px";
+
+      card.innerHTML = `
+        <div class="card-body">
+          <div aria-label="${r.rating} out of 5 stars">
+            ${"★".repeat(r.rating)}
+          </div>
+          <p>“${r.review}”</p>
+          <small>— ${r.event}${r.name ? ", " + r.name : ""}</small>
+        </div>
+      `;
+      container.appendChild(card);
+    });
+  });
+</script>
+    
     <div style="margin-top:24px">
       <a href="/reviews/submit/" class="btn btn-primary">Leave a Review</a>
     </div>
