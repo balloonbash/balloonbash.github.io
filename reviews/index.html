@@ -50,55 +50,64 @@
   </main>
 
   <script>
-    fetch("/partials/header.html")
-      .then(r => r.text())
-      .then(html => document.getElementById("header").innerHTML = html);
+  // Header loader
+  fetch("/partials/header.html")
+    .then(r => r.text())
+    .then(html => document.getElementById("header").innerHTML = html)
+    .catch(err => console.error("Header load error:", err));
 
-fetch("/reviews/data.json")
-  .then(r => r.json())
-  .then(reviews => {
-    const container = document.getElementById("reviews-list");
+  // Reviews loader
+  fetch("/reviews/data.json")
+    .then(r => {
+      if (!r.ok) throw new Error(`Failed to load /reviews/data.json (${r.status})`);
+      return r.json();
+    })
+    .then(reviews => {
+      const list = document.getElementById("reviews-list");
+      list.innerHTML = ""; // clear
 
-    reviews.forEach(r => {
-      const card = document.createElement("div");
-      card.className = "card";
-      card.style.marginBottom = "12px";
+      // newest first (assumes array is oldest -> newest in JSON)
+      reviews.slice().reverse().forEach(rv => {
+        const rating = Number(rv.rating) || 0;
+        const stars = "★★★★★".slice(0, Math.max(0, Math.min(5, rating)));
 
-      card.innerHTML = `
-        <div class="card-body">
-          <div aria-label="${r.rating} out of 5 stars">
-            ${"★".repeat(r.rating)}
+        // support either "event" or "eventType" field in your JSON
+        const eventLabel = rv.event ?? rv.eventType ?? "";
+
+        const card = document.createElement("div");
+        card.className = "card";
+        card.style.marginBottom = "12px";
+        card.innerHTML = `
+          <div class="card-body">
+            <div class="stars" aria-label="${rating} out of 5 stars">${stars}</div>
+            <p>“${escapeHtml(rv.review ?? "")}”</p>
+            <small>— ${escapeHtml(eventLabel)}${rv.name ? ", " + escapeHtml(rv.name) : ""}</small>
           </div>
-          <p>“${r.review}”</p>
-          <small>— ${r.event}${r.name ? ", " + r.name : ""}</small>
-        </div>
-      `;
-      container.appendChild(card);
-    });
-  });
-     // newest first
-        reviews.slice().reverse().forEach(rv => {
-          const stars = "★★★★★".slice(0, rv.rating);
-          const card = document.createElement("div");
-          card.className = "card";
-          card.style.marginBottom = "12px";
-          card.innerHTML = `
-            <div class="card-body">
-              <div aria-label="${rv.rating} out of 5 stars">${stars}</div>
-              <p>“${escapeHtml(rv.review)}”</p>
-              <small>— ${escapeHtml(rv.eventType)}${rv.name ? ", " + escapeHtml(rv.name) : ""}</small>
-            </div>`;
-          list.appendChild(card);
-        });
+        `;
+        list.appendChild(card);
       });
 
-    function escapeHtml(s){
-      return String(s).replace(/[&<>"']/g, c => ({
-        "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"
-      }[c]));
-    }
-    
-  </script>
+      // Optional: if empty
+      if (!reviews.length) {
+        list.innerHTML = `<p class="text-muted">No reviews yet.</p>`;
+      }
+    })
+    .catch(err => {
+      console.error("Reviews load error:", err);
+      const list = document.getElementById("reviews-list");
+      list.innerHTML = `<p class="text-muted">Could not load reviews.</p>`;
+    });
+
+  function escapeHtml(s) {
+    return String(s).replace(/[&<>"']/g, c => ({
+      "&": "&amp;",
+      "<": "&lt;",
+      ">": "&gt;",
+      '"': "&quot;",
+      "'": "&#039;"
+    }[c]));
+  }
+</script>
 
 
   
