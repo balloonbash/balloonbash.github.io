@@ -71,7 +71,6 @@ a { color: inherit; text-decoration: none; }
   background: #e6e6e6;
 }
 
-
 /* Auto-scaling logo */
 .site-logo {
   max-height: clamp(44px, 6vw, 56px);  /* 👈 THIS is the key */
@@ -81,6 +80,8 @@ a { color: inherit; text-decoration: none; }
   display: block;
 }
 
+/* star color in review page */
+.stars { color: #fbbf24; }
 
 
 @media (max-width: 900px) {
