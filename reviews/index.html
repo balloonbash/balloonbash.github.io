@@ -48,9 +48,9 @@
   </main>
 
   <script>
-    fetch("/partial/header.html")
+    fetch("/partials/header.html")
       .then(r => r.text())
-      .then(html => document.getElementById("site-header").innerHTML = html);
+      .then(html => document.getElementById("header").innerHTML = html);
   </script>
 </body>
 </html>
