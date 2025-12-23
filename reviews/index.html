@@ -1,1 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Customer Reviews | Balloon Bash</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
+  <!-- USE YOUR EXISTING CSS -->
+  <link rel="stylesheet" href="/assets/css/style.css">
+</head>
+
+<body>
+  <div id="site-header"></div>
+
+  <main class="container">
+    <h1>Customer Reviews</h1>
+    <p class="text-muted">
+      Honest feedback from customers who trusted us with their special moments.
+    </p>
+
+    <!-- REVIEW -->
+    <div class="card">
+      <div class="card-body">
+        <div class="stars">★★★★★</div>
+        <p>
+          “Setup was beautiful and exactly what we wanted.  
+          The balloons lasted for days!”
+        </p>
+        <small>— Birthday Setup, Singapore</small>
+      </div>
+    </div>
+
+    <!-- REVIEW -->
+    <div class="card">
+      <div class="card-body">
+        <div class="stars">★★★★★</div>
+        <p>
+          “Very friendly couple and smooth coordination.  
+          We really appreciated that there was no rushing to dismantle.”
+        </p>
+        <small>— Proposal Setup</small>
+      </div>
+    </div>
+
+    <div style="margin-top:24px">
+      <a href="/reviews/submit/" class="btn btn-primary">Leave a Review</a>
+    </div>
+  </main>
+
+  <script>
+    fetch("/partial/header.html")
+      .then(r => r.text())
+      .then(html => document.getElementById("site-header").innerHTML = html);
+  </script>
+</body>
+</html>
