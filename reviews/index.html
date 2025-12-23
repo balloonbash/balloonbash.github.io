@@ -56,56 +56,89 @@
     .then(html => document.getElementById("header").innerHTML = html)
     .catch(err => console.error("Header load error:", err));
 
-  // Reviews loader
-  fetch("/reviews/data.json")
-    .then(r => {
-      if (!r.ok) throw new Error(`Failed to load /reviews/data.json (${r.status})`);
-      return r.json();
-    })
-    .then(reviews => {
-      const list = document.getElementById("reviews-list");
-      list.innerHTML = ""; // clear
+  async function loadLatestReviews() {
+    const owner = "balloonbash";     // <-- change if your username is different
+    const repo  = "balloonbash.github.io";     // <-- change if repo name different
+    const folder = "reviews";
 
-      // newest first (assumes array is oldest -> newest in JSON)
-      reviews.slice().reverse().forEach(rv => {
-        const rating = Number(rv.rating) || 0;
-        const stars = "★★★★★".slice(0, Math.max(0, Math.min(5, rating)));
+    // 1) List files in /reviews via GitHub API
+    const apiUrl = `https://api.github.com/repos/${owner}/${repo}/contents/${folder}`;
+    const res = await fetch(apiUrl, { headers: { "Accept": "application/vnd.github+json" } });
 
-        // support either "event" or "eventType" field in your JSON
-        const eventLabel = rv.event ?? rv.eventType ?? "";
+    if (!res.ok) throw new Error("Failed to list reviews folder: " + res.status);
+    const files = await res.json();
 
-        const card = document.createElement("div");
-        card.className = "card";
-        card.style.marginBottom = "12px";
-        card.innerHTML = `
-          <div class="card-body">
-            <div class="stars" aria-label="${rating} out of 5 stars">${stars}</div>
-            <p>“${escapeHtml(rv.review ?? "")}”</p>
-            <small>— ${escapeHtml(eventLabel)}${rv.name ? ", " + escapeHtml(rv.name) : ""}</small>
-          </div>
-        `;
-        list.appendChild(card);
+    // 2) Filter for data-<timestamp>.json
+    const candidates = files
+      .filter(f => f.type === "file" && /^data-\d+\.json$/.test(f.name))
+      .sort((a, b) => {
+        // Compare numeric timestamp in filename
+        const ta = Number(a.name.match(/^data-(\d+)\.json$/)[1]);
+        const tb = Number(b.name.match(/^data-(\d+)\.json$/)[1]);
+        return tb - ta; // newest first
       });
 
-      // Optional: if empty
-      if (!reviews.length) {
-        list.innerHTML = `<p class="text-muted">No reviews yet.</p>`;
-      }
-    })
-    .catch(err => {
-      console.error("Reviews load error:", err);
-      const list = document.getElementById("reviews-list");
-      list.innerHTML = `<p class="text-muted">Could not load reviews.</p>`;
-    });
+    if (candidates.length === 0) {
+      return []; // no files yet
+    }
 
-  function escapeHtml(s) {
+    // 3) Fetch latest file content (use download_url)
+    const latest = candidates[0];
+    const jsonRes = await fetch(latest.download_url);
+    if (!jsonRes.ok) throw new Error("Failed to fetch latest reviews JSON");
+    return await jsonRes.json();
+  }
+
+  function escapeHtml(s){
     return String(s).replace(/[&<>"']/g, c => ({
-      "&": "&amp;",
-      "<": "&lt;",
-      ">": "&gt;",
-      '"': "&quot;",
-      "'": "&#039;"
+      "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"
     }[c]));
+  }
+
+  async function renderReviews() {
+    const list = document.getElementById("reviews-list");
+    list.innerHTML = "";
+
+    let reviews = [];
+    try {
+      reviews = await loadLatestReviews();
+    } catch (e) {
+      console.error(e);
+      list.innerHTML = `<div class="card"><div class="card-body">
+        <p class="muted">Could not load reviews right now.</p>
+      </div></div>`;
+      return;
+    }
+
+    if (!Array.isArray(reviews) || reviews.length === 0) {
+      list.innerHTML = `<div class="card"><div class="card-body">
+        <p class="muted">No approved reviews yet.</p>
+      </div></div>`;
+      return;
+    }
+
+    reviews.forEach(rv => {
+      const stars = "★★★★★".slice(0, Math.max(0, Math.min(5, Number(rv.rating) || 0)));
+      const card = document.createElement("div");
+      card.className = "card";
+      card.style.marginBottom = "12px";
+      card.innerHTML = `
+        <div class="card-body">
+          <div aria-label="${escapeHtml(rv.rating)} out of 5 stars">${stars}</div>
+          <p>“${escapeHtml(rv.review)}”</p>
+          <small>— ${escapeHtml(rv.eventType || rv.event || "")}${rv.name ? ", " + escapeHtml(rv.name) : ""}</small>
+        </div>`;
+      list.appendChild(card);
+    });
+  }
+
+  // header load (your existing)
+  fetch("/partials/header.html")
+    .then(r => r.text())
+    .then(html => document.getElementById("header").innerHTML = html);
+
+  // load reviews
+  renderReviews();
   }
 </script>
 
