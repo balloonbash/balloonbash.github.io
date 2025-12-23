@@ -123,7 +123,7 @@
         card.style.marginBottom = "12px";
         card.innerHTML = `
           <div class="card-body">
-            <div aria-label="${ratingNum} out of 5 stars">${stars}</div>
+            <div class="stars" aria-label="${ratingNum} out of 5 stars">${stars}</div>
             <p>“${escapeHtml(rv.review)}”</p>
             <small>
               — ${escapeHtml(rv.eventType || rv.event || "")}
