@@ -43,7 +43,17 @@
     </div>
      <!-- Test REVIEW Automation -->
     <div id="reviews-list"></div>
-<script>
+    
+    <div style="margin-top:24px">
+      <a href="https://docs.google.com/forms/d/e/1FAIpQLSfV43uDkA-vfEEXlZNdDcbeAl3PT2jdbiArUW7WMJqktRFBeQ/viewform" class="btn btn-primary">Leave a Review</a>
+    </div>
+  </main>
+
+  <script>
+    fetch("/partials/header.html")
+      .then(r => r.text())
+      .then(html => document.getElementById("header").innerHTML = html);
+
 fetch("/reviews/data.json")
   .then(r => r.json())
   .then(reviews => {
@@ -66,17 +76,31 @@ fetch("/reviews/data.json")
       container.appendChild(card);
     });
   });
-</script>
-    
-    <div style="margin-top:24px">
-      <a href="/reviews/submit/" class="btn btn-primary">Leave a Review</a>
-    </div>
-  </main>
+     // newest first
+        reviews.slice().reverse().forEach(rv => {
+          const stars = "★★★★★".slice(0, rv.rating);
+          const card = document.createElement("div");
+          card.className = "card";
+          card.style.marginBottom = "12px";
+          card.innerHTML = `
+            <div class="card-body">
+              <div aria-label="${rv.rating} out of 5 stars">${stars}</div>
+              <p>“${escapeHtml(rv.review)}”</p>
+              <small>— ${escapeHtml(rv.eventType)}${rv.name ? ", " + escapeHtml(rv.name) : ""}</small>
+            </div>`;
+          list.appendChild(card);
+        });
+      });
 
-  <script>
-    fetch("/partials/header.html")
-      .then(r => r.text())
-      .then(html => document.getElementById("header").innerHTML = html);
+    function escapeHtml(s){
+      return String(s).replace(/[&<>"']/g, c => ({
+        "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"
+      }[c]));
+    }
+    
   </script>
+
+
+  
 </body>
 </html>
